@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import AppHeader from "@/shared/ui/AppHeader";
+import AppHeader from "@/components/common/AppHeader";
 
-import { useUserInputSubmit } from "../hooks/useUserInputSubmit";
-import type { UserInputPayload } from "../types";
+import { useUserInputSubmit } from "@/hooks/useUserInputSubmit";
+import type { UserInputPayload } from "@/types/user";
 
 type Level = 1 | 2 | 3;
 
@@ -334,3 +334,4 @@ const UserInputPage = () => {
 };
 
 export default UserInputPage;
+

@@ -1,7 +1,7 @@
 ﻿ import { NextResponse } from "next/server";
 
- import { env } from "@/lib/env";
- import { FetchError, fetcher } from "@/lib/fetcher";
+ import { env } from "@/infra/env";
+ import { FetchError, fetcher } from "@/infra/fetcher";
 
 const buildTargetUrl = (requestUrl: string): string => {
   const incoming = new URL(requestUrl);
@@ -85,3 +85,4 @@ const mockResponse = (method: "GET" | "POST"): NextResponse => {
 
  export const POST = async (request: Request): Promise<NextResponse> =>
    proxyRequest(request, "POST");
+

@@ -1,5 +1,6 @@
-﻿import RecommendResultPage from "@/features/recommend/components/RecommendResultPage";
+﻿import RecommendResultPage from "@/components/recommend/RecommendResultPage";
 
 const RecommendPage = () => <RecommendResultPage />;
 
 export default RecommendPage;
+

@@ -1,5 +1,6 @@
-﻿import FaqPage from "@/features/consent/components/FaqPage";
+﻿import FaqPage from "@/components/consent/FaqPage";
 
 const Page = () => <FaqPage />;
 
 export default Page;
+

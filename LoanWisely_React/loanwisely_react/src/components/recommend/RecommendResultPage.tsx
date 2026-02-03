@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import AppHeader from "@/shared/ui/AppHeader";
+import AppHeader from "@/components/common/AppHeader";
 
-import { useRecommendResult } from "../hooks/useRecommendResult";
+import { useRecommendResult } from "@/hooks/useRecommendResult";
 
 const levelBadgeClass = (status: "full" | "partial" | "empty") => {
   if (status === "full") {
@@ -153,3 +153,4 @@ const RecommendResultPage = () => {
 };
 
 export default RecommendResultPage;
+

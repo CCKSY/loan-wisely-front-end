@@ -2,7 +2,7 @@
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-import QueryProvider from "@/shared/providers/QueryProvider";
+import QueryProvider from "@/providers/QueryProvider";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -27,3 +27,4 @@ const RootLayout = ({ children }: RootLayoutProps) => (
 );
 
 export default RootLayout;
+

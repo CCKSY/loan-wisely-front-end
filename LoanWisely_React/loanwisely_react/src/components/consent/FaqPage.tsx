@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import AppHeader from "@/shared/ui/AppHeader";
+import AppHeader from "@/components/common/AppHeader";
 
 type FaqItem = {
   id: string;

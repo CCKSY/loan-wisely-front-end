@@ -1,4 +1,4 @@
-﻿import AppHeader from "@/shared/ui/AppHeader";
+﻿import AppHeader from "@/components/common/AppHeader";
 
 const HomePage = () => (
   <main className="min-h-screen bg-gradient-to-br from-stone-100 via-stone-100 to-amber-50 px-16 py-14">
@@ -65,3 +65,4 @@ const HomePage = () => (
 );
 
 export default HomePage;
+
