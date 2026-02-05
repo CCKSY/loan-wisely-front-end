@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+﻿// 동의 생성 요청을 백엔드로 전달하는 BFF 라우트
+import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
 import { FetchError, fetcher } from "@/infra/fetcher";
@@ -57,3 +58,5 @@ export const POST = async (request: Request): Promise<NextResponse> => {
     return respond({ message: "Proxy request failed." }, 502);
   }
 };
+
+

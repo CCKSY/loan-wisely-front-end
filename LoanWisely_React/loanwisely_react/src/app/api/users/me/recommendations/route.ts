@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+﻿// 추천 목록 조회 요청을 백엔드로 전달하는 BFF 라우트
+import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
 import { FetchError, fetcher } from "@/infra/fetcher";

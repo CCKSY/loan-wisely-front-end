@@ -1,4 +1,5 @@
-﻿ type NodeEnv = "development" | "production" | "test";
+﻿// Server environment helpers.
+ type NodeEnv = "development" | "production" | "test";
 
  const normalizeNodeEnv = (value?: string): NodeEnv => {
    if (value === "production" || value === "test") {
@@ -40,3 +41,5 @@ export const env = {
   backendUrl: optional("BACKEND_URL"),
   requestTimeoutMs: numberFromEnv("REQUEST_TIMEOUT_MS", 10000),
 };
+
+

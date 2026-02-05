@@ -1,11 +1,7 @@
-﻿export type UserProfile = {
-  id: string;
-  name: string;
-  email: string;
-};
-
+﻿// User, profile, and credit types.
 export type UserProfileResponse = {
-  profile: UserProfile;
+  profilePayload: UserProfilePayload;
+  versionId: string;
 };
 
 export type UserInputLv1 = {
@@ -76,3 +72,5 @@ export type UserProfileSaveRequest = {
 export type UserProfileSaveResponse = {
   profileVersionId: string;
 };
+
+

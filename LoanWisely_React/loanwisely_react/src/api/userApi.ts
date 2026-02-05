@@ -1,4 +1,5 @@
-﻿import { fetcher } from "@/infra/fetcher";
+﻿// 사용자 프로필, 동의서, 신용 정보 관련 API 호출 함수들을 모아둔 파일
+import { fetcher } from "@/infra/fetcher";
 
 import type {
   UserConsentRequest,
@@ -7,23 +8,13 @@ import type {
   UserCreditLv2Response,
   UserCreditLv3Request,
   UserCreditLv3Response,
-  UserInputPayload,
   UserProfileSaveRequest,
   UserProfileSaveResponse,
   UserProfileResponse,
 } from "@/types/user";
 
-export const fetchUserProfile = async (userId: string): Promise<UserProfileResponse> =>
-  fetcher<UserProfileResponse>(`/api/user?userId=${encodeURIComponent(userId)}`);
-
-export const submitUserInput = async (payload: UserInputPayload): Promise<void> =>
-  fetcher<void>("/api/user", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+export const fetchUserProfile = async (): Promise<UserProfileResponse> =>
+  fetcher<UserProfileResponse>("/api/users/me/profile");
 
 export const createUserConsent = async (
   payload: UserConsentRequest,
@@ -68,4 +59,6 @@ export const saveUserProfile = async (
     },
     body: JSON.stringify(payload),
   });
+
+
 

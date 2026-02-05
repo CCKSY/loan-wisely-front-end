@@ -1,4 +1,5 @@
-﻿ type UserUiState = {
+﻿// User store placeholder.
+ type UserUiState = {
    selectedUserId: string | null;
  };
 
@@ -12,3 +13,5 @@
    selectedUserId: null,
    setSelectedUserId: () => undefined,
  });
+
+

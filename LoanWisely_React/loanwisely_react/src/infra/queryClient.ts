@@ -1,4 +1,5 @@
-﻿ import { QueryClient } from "@tanstack/react-query";
+﻿// React Query client configuration.
+ import { QueryClient } from "@tanstack/react-query";
 
  const createQueryClient = (): QueryClient =>
    new QueryClient({
@@ -24,3 +25,5 @@
 
    return browserQueryClient;
  };
+
+

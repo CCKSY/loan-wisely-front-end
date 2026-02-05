@@ -1,3 +1,4 @@
+﻿// 사용자 프로필 조회/저장 요청을 백엔드로 전달하는 BFF 라우트
 import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
@@ -32,6 +33,35 @@ const respond = (body: unknown, status: number): NextResponse => {
     return new NextResponse(body, { status });
   }
   return NextResponse.json(body, { status });
+};
+
+export const GET = async (request: Request): Promise<NextResponse> => {
+  if (env.backendUrl === "") {
+    return NextResponse.json({
+      profilePayload: {
+        age: 30,
+        incomeYear: 40000000,
+        gender: "male",
+      },
+      versionId: "demo-profile",
+    });
+  }
+
+  const targetUrl = buildTargetUrl(request.url);
+  const headers = forwardHeaders(request);
+
+  try {
+    const data = await fetcher<unknown>(targetUrl, {
+      method: "GET",
+      headers,
+    });
+    return respond(data, 200);
+  } catch (error) {
+    if (error instanceof FetchError) {
+      return respond(error.body, error.status);
+    }
+    return respond({ message: "Proxy request failed." }, 502);
+  }
 };
 
 export const PUT = async (request: Request): Promise<NextResponse> => {

@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+﻿// 추천 설명(explain) API를 백엔드로 프록시하는 BFF 라우트
+import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
 import { FetchError, fetcher } from "@/infra/fetcher";
@@ -64,3 +65,5 @@ export const GET = async (request: Request): Promise<NextResponse> => {
     return respond({ message: "Proxy request failed." }, 502);
   }
 };
+
+

@@ -1,4 +1,5 @@
-﻿export type LvUsageStatus = "full" | "partial" | "empty";
+﻿// Recommendation API types.
+export type LvUsageStatus = "full" | "partial" | "empty";
 
 export type RecommendExplain = {
   summary: string;
@@ -62,3 +63,5 @@ export type RecommendationListResponse = {
   size: number;
   total: number;
 };
+
+

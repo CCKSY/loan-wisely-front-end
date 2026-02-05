@@ -1,4 +1,5 @@
 ﻿"use client";
+// React Query provider wrapper.
 
 import { QueryClientProvider } from "@tanstack/react-query";
 
@@ -13,3 +14,5 @@ const QueryProvider = ({ children }: QueryProviderProps) => (
 );
 
 export default QueryProvider;
+
+

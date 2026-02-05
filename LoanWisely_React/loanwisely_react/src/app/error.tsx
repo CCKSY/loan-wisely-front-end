@@ -1,4 +1,5 @@
 ﻿"use client";
+// 전역 오류 화면(UI)
 
 type ErrorPageProps = {
   error: Error & { digest?: string };
@@ -16,3 +17,5 @@ const ErrorPage = ({ error, reset }: ErrorPageProps) => (
 );
 
 export default ErrorPage;
+
+

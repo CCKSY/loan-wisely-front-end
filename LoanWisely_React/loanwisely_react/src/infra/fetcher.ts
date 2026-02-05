@@ -1,4 +1,5 @@
-﻿ import { env } from "./env";
+﻿// Shared fetcher with timeout and error handling.
+ import { env } from "./env";
 
  export class FetchError extends Error {
    status: number;
@@ -47,3 +48,5 @@
      clearTimeout(timeoutId);
    }
  };
+
+

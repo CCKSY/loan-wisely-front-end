@@ -1,4 +1,5 @@
-﻿@import "tailwindcss";
+﻿/* Global styles and Tailwind base layer. */
+@import "tailwindcss";
 
 :root {
   color-scheme: light;
@@ -12,3 +13,5 @@ body {
 * {
   box-sizing: border-box;
 }
+
+

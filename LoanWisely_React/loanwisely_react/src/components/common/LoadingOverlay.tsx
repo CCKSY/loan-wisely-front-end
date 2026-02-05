@@ -1,4 +1,5 @@
-﻿import type { ReactNode } from "react";
+﻿// Full-screen loading overlay component.
+import type { ReactNode } from "react";
 
 type LoadingOverlayProps = {
   visible: boolean;
@@ -33,3 +34,5 @@ const LoadingOverlay = ({ visible, title, message }: LoadingOverlayProps) => {
 };
 
 export default LoadingOverlay;
+
+

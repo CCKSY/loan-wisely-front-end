@@ -1,4 +1,5 @@
-﻿import type { Metadata } from "next";
+﻿// “앱의 최상위 레이아웃과 공통 Provider를 감싸는 파일
+import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -27,4 +28,6 @@ const RootLayout = ({ children }: RootLayoutProps) => (
 );
 
 export default RootLayout;
+
+
 

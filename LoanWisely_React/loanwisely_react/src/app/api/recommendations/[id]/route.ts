@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+﻿// 추천 세부 사항을 위한 BFF 프록시.
+import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
 import { FetchError, fetcher } from "@/infra/fetcher";
@@ -70,3 +71,5 @@ export const GET = async (request: Request): Promise<NextResponse> => {
     return respond({ message: "Proxy request failed." }, 502);
   }
 };
+
+

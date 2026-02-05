@@ -1,4 +1,5 @@
-﻿import { fetcher } from "@/infra/fetcher";
+﻿// 추천 관련 API 호출 함수들을 모아둔 파일
+import { fetcher } from "@/infra/fetcher";
 
 import type {
   RecommendExecuteRequest,
@@ -43,4 +44,6 @@ export const fetchRecommendationList = async (
     `/api/users/me/recommendations?page=${page}&size=${size}`,
     { method: "GET" },
   );
+
+
 

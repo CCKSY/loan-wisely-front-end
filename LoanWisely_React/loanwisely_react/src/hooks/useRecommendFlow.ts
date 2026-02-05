@@ -1,4 +1,5 @@
-﻿import { useMutation } from "@tanstack/react-query";
+﻿// Hook to orchestrate save, consent, and recommendation flow.
+import { useMutation } from "@tanstack/react-query";
 
 import { createUserConsent, saveUserCreditLv2, saveUserCreditLv3, saveUserProfile } from "@/api/userApi";
 import { executeRecommendation } from "@/api/recommendApi";
@@ -106,3 +107,5 @@ export const useRecommendFlow = () =>
       });
     },
   });
+
+
