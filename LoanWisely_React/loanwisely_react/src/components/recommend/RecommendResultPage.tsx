@@ -9,6 +9,7 @@ import ActionSection from "@/components/recommend/sections/ActionSection";
 import ProductGridSection from "@/components/recommend/sections/ProductGridSection";
 import RecommendHeroSection from "@/components/recommend/sections/RecommendHeroSection";
 import RecommendationListSection from "@/components/recommend/sections/RecommendationListSection";
+import RiskSection from "@/components/recommend/sections/RiskSection";
 import SimulationSection from "@/components/recommend/sections/SimulationSection";
 import SummarySection from "@/components/recommend/sections/SummarySection";
 
@@ -54,6 +55,7 @@ const RecommendResultPage = () => {
     levelStatus: "empty",
   };
   const reasons = explainData?.reasons ?? [];
+  const riskNotes = explainData?.riskNotes ?? [];
 
   const products = data?.products ?? [
     {
@@ -177,6 +179,8 @@ const RecommendResultPage = () => {
               />
             </div>
           )}
+
+          <RiskSection riskNotes={riskNotes} fallbackNote={detail.riskWarning} />
 
           <ActionSection />
         </section>
