@@ -1,5 +1,4 @@
 "use client";
-// Recommendation result UI.
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -16,6 +15,28 @@ import { useRecommendResult } from "@/hooks/useRecommendResult";
 import { useRecommendationList } from "@/hooks/useRecommendationList";
 import { useRecommendationExplain } from "@/hooks/useRecommendationExplain";
 
+const normalizeReason = (value?: string | null): string => {
+  if (!value) return "";
+  return value
+    .replace(/[\u200B-\u200D\uFEFF]/g, "")
+    .replace(/\s+/g, "")
+    .toLowerCase()
+    .trim();
+};
+
+const EXCLUSION_REASON_KEYWORDS = [
+  "대출목적이정책상허용되지않습니다",
+  "dsr가기준을초과했습니다",
+  "dsr기준초과",
+  "자격조건",
+  "허용되지않습니다",
+  "noteligible",
+  "dsr",
+];
+
+const PURPOSE_MISMATCH_MESSAGE = "대출 목적이 정책상 허용되지 않습니다.";
+const DSR_TOO_HIGH_MESSAGE = "DSR가 기준을 초과했습니다.";
+const NOT_ELIGIBLE_MESSAGE = "대출 자격 조건에 해당하지 않습니다.";
 
 const RecommendResultPage = () => {
   const [showAllProducts, setShowAllProducts] = useState(true);
@@ -24,62 +45,45 @@ const RecommendResultPage = () => {
   const [excludedPage, setExcludedPage] = useState(1);
   const [listPage, setListPage] = useState(0);
   const listSize = 2;
+
   const searchParams = useSearchParams();
   const recommendationId = searchParams.get("id");
+
   const { data, isLoading } = useRecommendResult(recommendationId);
   const accessToken = getAccessToken();
-
   const { data: listData } = useRecommendationList(listPage, listSize, Boolean(accessToken));
   const { data: explainData } = useRecommendationExplain(recommendationId);
 
   const reasons = explainData?.reasons ?? [];
-
   const products = data?.products ?? [];
-
   const detail = data?.detail ?? {
-    description: "??⑤㈇???筌먲퐢沅뽪뤆?쎛 ?熬곣뫗異???蹂κ텢??? ???용┃???鍮??",
-    monthlyPaymentExample: "??⑤?????????깅턄???筌먲퐢沅뽪뤆?쎛 ?熬곣뫗異???蹂κ텢??? ???용┃???鍮??",
-    riskWarning: "?洹먮봾裕?????뉖? ?筌먲퐢沅뽪뤆?쎛 ?熬곣뫗異???蹂κ텢??? ???용┃???鍮??",
+    description: "상세 정보가 아직 제공되지 않았습니다.",
+    monthlyPaymentExample: "상환 시뮬레이션 정보가 아직 제공되지 않았습니다.",
+    riskWarning: "리스크 안내 정보가 아직 제공되지 않았습니다.",
   };
-  const purposeMismatchMessage = "????嶺뚮ㅄ維????筌먦끉??????깅뮔??? ???용????덈펲.";
-  const dsrTooHighMessage = "DSR?띠럾? ?リ옇?????貫?????곕????덈펲.";
-  const notEligibleMessage = "?怨뺣뾼??????⑤챷逾??熬곣뫀六???덈펲.";
-  const exclusionMessages = [purposeMismatchMessage, dsrTooHighMessage, notEligibleMessage];
-  const normalizeReason = (value?: string | null): string => {
-    if (!value) return "";
-    return value
-      .replace(/[\u200B-\u200D\uFEFF]/g, "")
-      .replace(/\s+/g, "")
-      .trim();
-  };
-  const normalizedExclusionMessages = exclusionMessages.map((msg) =>
-    normalizeReason(msg),
-  );
+
+  const exclusionMessages = [PURPOSE_MISMATCH_MESSAGE, DSR_TOO_HIGH_MESSAGE, NOT_ELIGIBLE_MESSAGE];
+  const normalizedExclusionMessages = exclusionMessages.map((msg) => normalizeReason(msg));
+
   const hasExclusionReason = (reason?: string | null): boolean => {
     const normalized = normalizeReason(reason);
     if (!normalized) return false;
-    if (normalizedExclusionMessages.some((msg) => normalized.includes(msg))) {
-      return true;
-    }
-    return normalized.includes("dsr");
+    if (normalizedExclusionMessages.some((msg) => normalized.includes(msg))) return true;
+    return EXCLUSION_REASON_KEYWORDS.some((keyword) => normalized.includes(keyword));
   };
-  const eligibleProducts = products.filter(
-    (product) => !hasExclusionReason(product.reason),
-  );
-  const excludedProducts = products.filter((product) =>
-    hasExclusionReason(product.reason),
-  );
-  const eligibleFallbackTags = reasons.filter(
-    (reason) => !exclusionMessages.includes(reason),
-  );
-  const excludedFallbackTags = reasons.filter((reason) =>
-    exclusionMessages.includes(reason),
-  );
+
+  const eligibleProducts = products.filter((product) => !hasExclusionReason(product.reason));
+  const excludedProducts = products.filter((product) => hasExclusionReason(product.reason));
+
+  const eligibleFallbackTags = reasons.filter((reason) => !hasExclusionReason(reason));
+  const excludedFallbackTags = reasons.filter((reason) => hasExclusionReason(reason));
+
   const productPageSize = 9;
   const eligibleTotalPages = Math.max(1, Math.ceil(eligibleProducts.length / productPageSize));
   const excludedTotalPages = Math.max(1, Math.ceil(excludedProducts.length / productPageSize));
   const eligibleCurrentPage = Math.min(eligiblePage, eligibleTotalPages);
   const excludedCurrentPage = Math.min(excludedPage, excludedTotalPages);
+
   const eligibleSlice = eligibleProducts.slice(
     (eligibleCurrentPage - 1) * productPageSize,
     eligibleCurrentPage * productPageSize,
@@ -88,6 +92,7 @@ const RecommendResultPage = () => {
     (excludedCurrentPage - 1) * productPageSize,
     excludedCurrentPage * productPageSize,
   );
+
   const eligiblePages = Array.from({ length: eligibleTotalPages }, (_, i) => i + 1);
   const excludedPages = Array.from({ length: excludedTotalPages }, (_, i) => i + 1);
 
@@ -100,17 +105,18 @@ const RecommendResultPage = () => {
           <RecommendHeroSection hasId={Boolean(recommendationId)} isLoading={isLoading} />
 
           <div className="grid gap-4">
-            <h3 className="text-lg font-semibold text-stone-900">?怨뺣뾼????⑤갭?</h3>
+            <h3 className="text-lg font-semibold text-stone-900">추천 상품</h3>
             <ProductGridSection
               products={eligibleSlice}
               fallbackTags={eligibleFallbackTags}
               showAll={showAllProducts}
               onShowAll={() => setShowAllProducts(true)}
             />
+
             {eligibleProducts.length > productPageSize && (
               <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-xs text-stone-500">
                 <span>
-                  ??{eligibleProducts.length}??鸚?{eligibleCurrentPage} / {eligibleTotalPages} ??瑜곷턄嶺뚯솘?
+                  총 {eligibleProducts.length}개 · {eligibleCurrentPage} / {eligibleTotalPages} 페이지
                 </span>
                 <div className="flex flex-wrap items-center gap-2">
                   <button
@@ -119,7 +125,7 @@ const RecommendResultPage = () => {
                     disabled={eligibleCurrentPage === 1}
                     className="rounded-full border border-stone-200 px-3 py-1 disabled:opacity-40"
                   >
-                    ??怨몄쓧
+                    이전
                   </button>
                   {eligiblePages.map((pageNumber) => (
                     <button
@@ -143,7 +149,7 @@ const RecommendResultPage = () => {
                     disabled={eligibleCurrentPage === eligibleTotalPages}
                     className="rounded-full border border-stone-200 px-3 py-1 disabled:opacity-40"
                   >
-                    ???깅쾳
+                    다음
                   </button>
                 </div>
               </div>
@@ -152,9 +158,7 @@ const RecommendResultPage = () => {
 
           <div className="grid gap-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h3 className="text-lg font-semibold text-stone-900">
-                嶺뚮ㅄ維???釉띾쐠??뉎럦?????戮곕뇶 ??⑤갭?
-              </h3>
+              <h3 className="text-lg font-semibold text-stone-900">목적 불일치 및 제외 상품</h3>
               <button
                 type="button"
                 onClick={() => setShowExcludedProducts((prev) => !prev)}
@@ -163,23 +167,21 @@ const RecommendResultPage = () => {
                 {showExcludedProducts ? "대출 제외 상품 닫기" : "대출 제외 상품 보기"}
               </button>
             </div>
+
             {showExcludedProducts ? (
               excludedProducts.length > 0 ? (
                 <>
                   <ProductGridSection
                     products={excludedSlice}
-                    fallbackTags={
-                      excludedFallbackTags.length > 0
-                        ? excludedFallbackTags
-                        : exclusionMessages
-                    }
+                    fallbackTags={excludedFallbackTags.length > 0 ? excludedFallbackTags : exclusionMessages}
                     showAll={true}
                     onShowAll={() => {}}
                   />
+
                   {excludedProducts.length > productPageSize && (
                     <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-xs text-stone-500">
                       <span>
-                        ??{excludedProducts.length}??鸚?{excludedCurrentPage} / {excludedTotalPages} ??瑜곷턄嶺뚯솘?
+                        총 {excludedProducts.length}개 · {excludedCurrentPage} / {excludedTotalPages} 페이지
                       </span>
                       <div className="flex flex-wrap items-center gap-2">
                         <button
@@ -188,7 +190,7 @@ const RecommendResultPage = () => {
                           disabled={excludedCurrentPage === 1}
                           className="rounded-full border border-stone-200 px-3 py-1 disabled:opacity-40"
                         >
-                          ??怨몄쓧
+                          이전
                         </button>
                         {excludedPages.map((pageNumber) => (
                           <button
@@ -212,7 +214,7 @@ const RecommendResultPage = () => {
                           disabled={excludedCurrentPage === excludedTotalPages}
                           className="rounded-full border border-stone-200 px-3 py-1 disabled:opacity-40"
                         >
-                          ???깅쾳
+                          다음
                         </button>
                       </div>
                     </div>
@@ -220,12 +222,12 @@ const RecommendResultPage = () => {
                 </>
               ) : (
                 <div className="rounded-2xl border border-stone-200 bg-white px-6 py-8 text-center text-sm text-stone-500">
-                  ??戮곕뇶????⑤갭?????怨룸????덈펲.
+                  제외된 상품이 없습니다.
                 </div>
               )
             ) : (
               <div className="rounded-2xl border border-dashed border-stone-200 bg-stone-50 px-6 py-6 text-center text-xs text-stone-500">
-                ??戮곕뇶????⑤갭????곌랜???彛??뺢퀗????????롩썒??닔???
+                대출 제외 상품 보기를 눌러 제외된 상품과 사유를 확인하세요.
               </div>
             )}
           </div>

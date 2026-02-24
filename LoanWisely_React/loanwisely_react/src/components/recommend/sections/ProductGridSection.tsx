@@ -1,4 +1,3 @@
-// 추천 상품 리스트 섹션
 import ProductCard, { type ProductCardProps } from "@/components/recommend/parts/ProductCard";
 
 type ProductInput = Omit<ProductCardProps, "tags">;
@@ -23,9 +22,7 @@ const dedupeTags = (tags: string[]): string[] => {
   const seen = new Set<string>();
   return tags.filter((tag) => {
     const normalized = tag.trim();
-    if (!normalized || seen.has(normalized)) {
-      return false;
-    }
+    if (!normalized || seen.has(normalized)) return false;
     seen.add(normalized);
     return true;
   });
@@ -60,13 +57,14 @@ const ProductGridSection = ({
           })}
         </div>
       )}
+
       {!showAll && products.length > 3 && (
         <button
           type="button"
           onClick={onShowAll}
           className="rounded-full border border-stone-300 bg-white px-6 py-2 text-sm font-semibold text-stone-700 hover:border-stone-400"
         >
-          대출 상품 추천 더보기
+          추천 상품 더보기
         </button>
       )}
     </div>

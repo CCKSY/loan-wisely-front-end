@@ -1,4 +1,3 @@
-// 추천 상품 카드
 "use client";
 
 import { useState } from "react";
@@ -22,52 +21,36 @@ export type ProductCardProps = {
 };
 
 const formatNumber = (value: number | null | undefined): string => {
-  if (value === null || value === undefined || Number.isNaN(value)) {
-    return "-";
-  }
+  if (value === null || value === undefined || Number.isNaN(value)) return "-";
   return value.toFixed(2);
 };
 
 const formatRateNumber = (value: number | null | undefined): string => {
-  if (value === null || value === undefined || Number.isNaN(value)) {
-    return "-";
-  }
-  if (value <= 0) {
-    return "";
-  }
+  if (value === null || value === undefined || Number.isNaN(value)) return "-";
+  if (value <= 0) return "";
   return value.toFixed(2);
 };
 
 const formatRateText = (value: string): string => {
-  if (!value) {
-    return "-";
-  }
+  if (!value) return "-";
   const replaced = value.replace(/-?\d+(\.\d+)?/g, (match) => {
     const parsed = Number(match);
-    if (Number.isNaN(parsed)) {
-      return match;
-    }
+    if (Number.isNaN(parsed)) return match;
     return formatRateNumber(parsed);
   });
   return replaced.replace(/\s+/g, " ").trim();
 };
 
 const formatLimitValue = (raw: string): string => {
-  if (!raw) {
-    return "-";
-  }
+  if (!raw) return "-";
   const trimmed = raw.trim();
-  if (!/^[\d,.\s]+$/.test(trimmed)) {
-    return raw;
-  }
+  if (!/^[\d,.\s]+$/.test(trimmed)) return raw;
+
   const numeric = Number(trimmed.replace(/[^\d.]/g, ""));
-  if (Number.isNaN(numeric)) {
-    return raw;
-  }
+  if (Number.isNaN(numeric)) return raw;
+
   const man = Math.floor(numeric / 10000);
-  if (man > 0) {
-    return `${man.toLocaleString()}만원`;
-  }
+  if (man > 0) return `${man.toLocaleString()}만원`;
   return `${numeric.toLocaleString()}원`;
 };
 
@@ -89,9 +72,7 @@ const isRateDetail = (name: string, code: string): boolean => {
 
 const normalizeLenderName = (value: string): string => {
   const match = value.match(/^Provider\s+(\d+)$/i);
-  if (match && match[1]) {
-    return `금융사 ${match[1]}`;
-  }
+  if (match?.[1]) return `금융사 ${match[1]}`;
   return value;
 };
 
@@ -101,7 +82,6 @@ const ProductCard = ({
   productName,
   rate,
   limit,
-  reason,
   suitabilityScore,
   tags,
   providerUrl,
@@ -123,6 +103,7 @@ const ProductCard = ({
           <div className="mt-2 text-sm text-stone-600">{formattedRate}</div>
           <div className="text-sm text-stone-600">{formattedLimit}</div>
         </div>
+
         <div className="relative">
           <button
             type="button"
@@ -131,6 +112,7 @@ const ProductCard = ({
           >
             상세 보기
           </button>
+
           {open ? (
             <div
               className="absolute right-0 top-12 z-10 w-64 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-xs text-stone-700 shadow-lg"
@@ -142,6 +124,7 @@ const ProductCard = ({
                 <div className="text-sm font-semibold text-stone-900">{productName}</div>
                 <div className="mt-1 text-[11px] text-stone-500">은행명</div>
                 <div className="text-sm text-stone-800">{lenderLabel}</div>
+
                 {providerUrl ? (
                   <a
                     href={providerUrl}
@@ -154,6 +137,7 @@ const ProductCard = ({
                 ) : (
                   <div className="text-xs text-stone-400">등록된 URL이 없습니다.</div>
                 )}
+
                 <div className="flex items-center justify-end gap-2 pt-1">
                   {providerUrl ? (
                     <a
@@ -178,10 +162,11 @@ const ProductCard = ({
           ) : null}
         </div>
       </div>
+
       <div className="mt-4 text-sm text-stone-600">
-        <span className="font-semibold text-stone-800">적합도:</span>{" "}
-        {formatNumber(suitabilityScore)}점
+        <span className="font-semibold text-stone-800">적합도:</span> {formatNumber(suitabilityScore)}점
       </div>
+
       <div className="mt-4 flex flex-wrap gap-2">
         {tags.map((tag) => (
           <span
@@ -192,6 +177,7 @@ const ProductCard = ({
           </span>
         ))}
       </div>
+
       {estimationDetails.length > 0 && (
         <div className="mt-4 rounded-2xl bg-stone-50 px-4 py-3 text-xs text-stone-600">
           <div className="mb-2 text-xs font-semibold text-stone-700">추정 상세</div>
@@ -208,8 +194,8 @@ const ProductCard = ({
                     {detail.factorCode?.toUpperCase().includes("LIMIT")
                       ? formatLimitValue(detail.factorValue)
                       : isRateDetail(detail.factorName ?? "", detail.factorCode ?? "")
-                      ? formatRateNumber(Number(detail.factorValue))
-                      : formatNumber(Number(detail.factorValue))}
+                        ? formatRateNumber(Number(detail.factorValue))
+                        : formatNumber(Number(detail.factorValue))}
                   </span>
                 </div>
               ))}
