@@ -1,4 +1,4 @@
-﻿// 입력 단계 이동 버튼
+// 입력 단계 이동 버튼
 type ActionBarProps = {
   level: 1 | 2 | 3;
   isPending: boolean;

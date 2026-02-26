@@ -1,4 +1,3 @@
-﻿// 추천 결과 상단 타이틀 섹션
 type RecommendHeroSectionProps = {
   hasId: boolean;
   isLoading: boolean;
@@ -15,7 +14,7 @@ const RecommendHeroSection = ({ hasId, isLoading }: RecommendHeroSectionProps) =
 
     {!hasId && (
       <div className="rounded-3xl border border-stone-200 bg-stone-50 px-6 py-5 text-sm text-stone-600">
-        추천 결과 ID가 없어 데모 화면을 표시합니다.
+        추천 결과 ID가 없어 데모 화면만 표시합니다.
       </div>
     )}
 

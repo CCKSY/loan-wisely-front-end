@@ -1,4 +1,4 @@
-﻿// 사용자 입력 단계 및 메타 정보
+// 사용자 입력 단계 및 메타 정보
 export type Level = 1 | 2 | 3;
 
 export type LevelMeta = {

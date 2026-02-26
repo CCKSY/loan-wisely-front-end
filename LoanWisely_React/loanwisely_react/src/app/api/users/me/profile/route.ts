@@ -1,4 +1,4 @@
-﻿// 사용자 프로필 조회/저장 요청을 백엔드로 전달하는 BFF 라우트
+// 사용자 프로필 조회/저장 요청을 백엔드로 전달하는 BFF 라우트
 import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
@@ -37,14 +37,10 @@ const respond = (body: unknown, status: number): NextResponse => {
 
 export const GET = async (request: Request): Promise<NextResponse> => {
   if (env.backendUrl === "") {
-    return NextResponse.json({
-      profilePayload: {
-        age: 30,
-        incomeYear: 40000000,
-        gender: "male",
-      },
-      versionId: "demo-profile",
-    });
+    return NextResponse.json(
+      { message: "백엔드 API 주소가 설정되지 않아 사용자 프로필 조회를 처리할 수 없습니다." },
+      { status: 503 },
+    );
   }
 
   const targetUrl = buildTargetUrl(request.url);
@@ -66,7 +62,10 @@ export const GET = async (request: Request): Promise<NextResponse> => {
 
 export const PUT = async (request: Request): Promise<NextResponse> => {
   if (env.backendUrl === "") {
-    return NextResponse.json({ profileVersionId: "demo-profile" });
+    return NextResponse.json(
+      { message: "백엔드 API 주소가 설정되지 않아 사용자 프로필 저장을 처리할 수 없습니다." },
+      { status: 503 },
+    );
   }
 
   const targetUrl = buildTargetUrl(request.url);

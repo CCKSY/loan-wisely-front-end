@@ -1,4 +1,4 @@
-﻿// Recommendation API types.
+// Recommendation API types.
 export type LvUsageStatus = "full" | "partial" | "empty";
 
 export type RecommendExplain = {
@@ -16,6 +16,15 @@ export type RecommendProduct = {
   reason: string;
   suitabilityScore: number;
   riskNote: string;
+  providerUrl?: string;
+  estimationDetails?: RecommendEstimationDetail[];
+};
+
+export type RecommendEstimationDetail = {
+  factorCode: string;
+  factorName: string;
+  factorValue: string;
+  contribution?: string | null;
 };
 
 export type RecommendDetail = {
@@ -55,6 +64,12 @@ export type RecommendationListItem = {
   id: string;
   title: string;
   createdAt: string;
+  products: {
+    productName: string;
+    rate: string;
+    limit: string;
+    repaymentMethod: string;
+  }[];
 };
 
 export type RecommendationListResponse = {

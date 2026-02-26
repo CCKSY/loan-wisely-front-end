@@ -1,4 +1,4 @@
-﻿// FAQ 질문 목록
+// FAQ 질문 목록
 import type { FaqItem } from "@/components/consent/data";
 
 type QuestionListProps = {

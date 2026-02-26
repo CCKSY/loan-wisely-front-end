@@ -1,4 +1,4 @@
-﻿// 입력 가이드 사이드바
+// 입력 가이드 사이드바
 const GuideSidebar = () => (
   <aside className="rounded-3xl border border-stone-200 bg-stone-50 p-4 sm:p-5">
     <div className="rounded-2xl border border-stone-200 bg-white px-4 py-2 text-center text-sm font-semibold text-stone-700">

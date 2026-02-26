@@ -1,4 +1,4 @@
-﻿// 입력 페이지 공통 푸터
+// 입력 페이지 공통 푸터
 const UserFooter = () => (
   <footer className="rounded-[28px] border border-stone-200 bg-white/85 px-8 py-5 text-xs text-stone-600 shadow-soft-lg">
     <div className="flex flex-wrap gap-4 pb-2 text-sm font-medium text-stone-700">

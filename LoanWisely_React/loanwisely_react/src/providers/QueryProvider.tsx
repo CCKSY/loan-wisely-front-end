@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 // React Query provider wrapper.
 
 import { QueryClientProvider } from "@tanstack/react-query";

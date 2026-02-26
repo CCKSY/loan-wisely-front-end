@@ -1,4 +1,4 @@
-﻿// LV2 신용정보 저장 요청을 백엔드로 전달하는 BFF 라우트
+// LV2 신용정보 저장 요청을 백엔드로 전달하는 BFF 라우트
 import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
@@ -37,7 +37,10 @@ const respond = (body: unknown, status: number): NextResponse => {
 
 export const PUT = async (request: Request): Promise<NextResponse> => {
   if (env.backendUrl === "") {
-    return NextResponse.json({ lv2VersionId: "demo-lv2" });
+    return NextResponse.json(
+      { message: "백엔드 API 주소가 설정되지 않아 Lv2 금융정보 저장을 처리할 수 없습니다." },
+      { status: 503 },
+    );
   }
 
   const targetUrl = buildTargetUrl(request.url);

@@ -1,4 +1,4 @@
-﻿// FAQ 화면 데모 데이터
+// FAQ 화면 데모 데이터
 export type FaqItem = {
   id: string;
   question: string;

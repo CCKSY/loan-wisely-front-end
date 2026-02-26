@@ -1,4 +1,4 @@
-﻿// FAQ 헤더 섹션
+// FAQ 헤더 섹션
 const FaqHeaderSection = () => (
   <div>
     <h1 className="text-3xl font-semibold text-stone-900">FAQ</h1>

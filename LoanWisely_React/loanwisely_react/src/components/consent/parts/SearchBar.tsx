@@ -1,4 +1,4 @@
-﻿// FAQ 검색 입력
+// FAQ 검색 입력
 import type { ChangeEvent } from "react";
 
 type SearchBarProps = {

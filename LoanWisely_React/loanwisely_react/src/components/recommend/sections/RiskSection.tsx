@@ -1,4 +1,3 @@
-﻿// 리스크 요인 섹션
 type RiskSectionProps = {
   riskNotes: string[];
   fallbackNote: string;
@@ -6,7 +5,7 @@ type RiskSectionProps = {
 
 const RiskSection = ({ riskNotes, fallbackNote }: RiskSectionProps) => (
   <div className="rounded-3xl border border-stone-200 bg-stone-50/70 px-6 py-5">
-    <div className="text-sm font-semibold text-stone-900">주요 리스크 요인</div>
+    <div className="text-sm font-semibold text-stone-900">주요 리스크 안내</div>
     {(riskNotes.length > 0 ? riskNotes : [fallbackNote]).map((note) => (
       <div
         key={note}

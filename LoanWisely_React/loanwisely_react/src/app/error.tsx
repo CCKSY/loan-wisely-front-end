@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 // 전역 오류 화면(UI)
 
 type ErrorPageProps = {

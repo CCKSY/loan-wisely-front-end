@@ -1,4 +1,4 @@
-﻿// React Query client configuration.
+// React Query client configuration.
  import { QueryClient } from "@tanstack/react-query";
 
  const createQueryClient = (): QueryClient =>

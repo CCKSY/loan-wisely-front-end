@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 // FAQ and guide UI.
 
 import { useMemo, useState } from "react";

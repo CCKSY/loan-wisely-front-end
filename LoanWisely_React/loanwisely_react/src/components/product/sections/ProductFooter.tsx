@@ -1,4 +1,4 @@
-﻿// 상품 페이지 하단 푸터
+// 상품 페이지 하단 푸터
 const ProductFooter = () => (
   <footer className="rounded-[28px] border border-stone-200 bg-white/85 px-8 py-5 text-xs text-stone-600 shadow-soft-lg">
     <div className="flex flex-wrap gap-4 pb-2 text-sm font-medium text-stone-700">

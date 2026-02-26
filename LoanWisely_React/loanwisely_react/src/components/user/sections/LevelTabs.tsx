@@ -1,4 +1,4 @@
-﻿// 입력 단계 탭
+// 입력 단계 탭
 import type { Level } from "@/components/user/constants";
 import { levelMeta } from "@/components/user/constants";
 

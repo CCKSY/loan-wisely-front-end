@@ -1,4 +1,4 @@
-﻿// Hook to load recommendation detail.
+// Hook to load recommendation detail.
 import { useQuery } from "@tanstack/react-query";
 
 import { fetchRecommendationDetail } from "@/api/recommendApi";

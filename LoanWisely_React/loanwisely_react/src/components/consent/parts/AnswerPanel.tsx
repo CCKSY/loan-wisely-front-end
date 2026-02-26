@@ -1,4 +1,4 @@
-﻿// FAQ 상세 답변 패널
+// FAQ 상세 답변 패널
 type AnswerPanelProps = {
   answer?: string;
 };

@@ -1,4 +1,4 @@
-﻿// FAQ 카테고리 목록
+// FAQ 카테고리 목록
 import type { FaqCategory } from "@/components/consent/data";
 
 type CategoryListProps = {

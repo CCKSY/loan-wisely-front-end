@@ -1,4 +1,4 @@
-﻿// 추천 목록 조회 요청을 백엔드로 전달하는 BFF 라우트
+// Recommendation list proxy.
 import { NextResponse } from "next/server";
 
 import { env } from "@/infra/env";
@@ -10,32 +10,12 @@ const buildTargetUrl = (requestUrl: string): string => {
   return `${base}${incoming.pathname}${incoming.search}`;
 };
 
-const mockResponse = (): NextResponse =>
-  NextResponse.json({
-    items: [
-      {
-        id: "demo-reco-1",
-        createdAt: "2026-02-03T00:00:00Z",
-        title: "최근 추천 결과",
-      },
-    ],
-    page: 0,
-    size: 10,
-    total: 1,
-  });
-
 const forwardHeaders = (request: Request): HeadersInit => {
   const headers = new Headers();
-  const contentType = request.headers.get("content-type");
   const authorization = request.headers.get("authorization");
-
-  if (contentType) {
-    headers.set("content-type", contentType);
-  }
   if (authorization) {
     headers.set("authorization", authorization);
   }
-
   return headers;
 };
 
@@ -51,7 +31,17 @@ const respond = (body: unknown, status: number): NextResponse => {
 
 export const GET = async (request: Request): Promise<NextResponse> => {
   if (env.backendUrl === "") {
-    return mockResponse();
+    return respond(
+      {
+        items: [],
+        page: 0,
+        size: 10,
+        total: 0,
+        code: "BFF_BACKEND_NOT_CONFIGURED",
+        message: "백엔드 연결이 설정되지 않아 추천 이력을 불러올 수 없습니다.",
+      },
+      503,
+    );
   }
 
   const targetUrl = buildTargetUrl(request.url);

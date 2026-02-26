@@ -1,4 +1,4 @@
-﻿// LV2 입력 필드
+// LV2 입력 필드
 import type { UseFormRegister } from "react-hook-form";
 
 import type { FormValues } from "@/components/user/types";

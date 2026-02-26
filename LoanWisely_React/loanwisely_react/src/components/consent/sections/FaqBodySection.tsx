@@ -1,4 +1,4 @@
-﻿// FAQ 본문 섹션
+// FAQ 본문 섹션
 import type { FaqCategory } from "@/components/consent/data";
 import AnswerPanel from "@/components/consent/parts/AnswerPanel";
 import CategoryList from "@/components/consent/parts/CategoryList";

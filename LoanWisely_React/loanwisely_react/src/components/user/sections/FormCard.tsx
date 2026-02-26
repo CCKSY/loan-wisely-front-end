@@ -1,4 +1,4 @@
-﻿// 입력 폼 카드 컨테이너
+// 입력 폼 카드 컨테이너
 import { levelMeta, type Level } from "@/components/user/constants";
 
 type FormCardProps = {

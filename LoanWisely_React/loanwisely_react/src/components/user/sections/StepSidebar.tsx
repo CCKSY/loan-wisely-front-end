@@ -1,4 +1,4 @@
-﻿// 입력 단계 사이드바
+// 입력 단계 사이드바
 import type { Level } from "@/components/user/constants";
 import { levelMeta } from "@/components/user/constants";
 

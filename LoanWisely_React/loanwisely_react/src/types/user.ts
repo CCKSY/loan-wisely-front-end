@@ -1,4 +1,4 @@
-﻿// User, profile, and credit types.
+// User, profile, and credit types.
 export type UserProfileResponse = {
   profilePayload: UserProfilePayload;
   versionId: string;
@@ -6,7 +6,7 @@ export type UserProfileResponse = {
 
 export type UserInputLv1 = {
   age: number | null;
-  incomeYear: number | null;
+  annualIncome: number | null;
   gender: "male" | "female" | null;
 };
 
@@ -17,7 +17,7 @@ export type UserInputLv2 = {
 
 export type UserInputLv3 = {
   loanPurpose: string | null;
-  totalDebt: number | null;
+  totalDebtAmount: number | null;
   existingLoanCount: number | null;
   consent: boolean;
 };
@@ -28,20 +28,38 @@ export type UserInputPayload = {
   lv3: UserInputLv3;
 };
 
-export type UserConsentLevel = "LV2" | "LV3";
+export type UserConsentLevel = 1 | 2 | 3;
 
 export type UserConsentRequest = {
-  level: UserConsentLevel;
-  purposeTags: string[];
+  consentLevel: UserConsentLevel;
+  consentGiven: boolean;
 };
 
 export type UserConsentResponse = {
-  consentId: string;
+  userId: number;
+  consentLevel: number;
+  consentGiven: "Y" | "N";
+  isActive: "Y" | "N";
+  createdAt: string;
+};
+
+export type UserCreditLv1Request = {
+  age: number | null;
+  incomeYear: number | null;
+  gender: "male" | "female" | null;
+};
+
+export type UserCreditLv1Response = {
+  userId: number;
+  age: number;
+  incomeYear: number;
+  gender: "male" | "female" | string;
+  createdAt: string;
 };
 
 export type UserCreditLv2Request = {
-  lv2Payload: UserInputLv2;
-  consentId: string;
+  employmentType: string | null;
+  residenceType: string | null;
 };
 
 export type UserCreditLv2Response = {
@@ -49,24 +67,31 @@ export type UserCreditLv2Response = {
 };
 
 export type UserCreditLv3Request = {
-  lv3Payload: UserCreditLv3Payload;
-  sourceType: string;
+  loanPurpose: string | null;
+  totalDebt: number | null;
+  existingLoanCount: number | null;
 };
 
 export type UserCreditLv3Response = {
   lv3VersionId: string;
 };
 
-export type UserCreditLv3Payload = Omit<UserInputLv3, "consent">;
-
 export type UserProfilePayload = {
   age: number | null;
-  incomeYear: number | null;
+  annualIncome: number | null;
   gender: "male" | "female" | null;
 };
 
 export type UserProfileSaveRequest = {
-  profilePayload: UserProfilePayload;
+  inputLevel: number;
+  age: number | null;
+  incomeYear: number | null;
+  gender: "male" | "female" | null;
+  employmentType?: string | null;
+  residenceType?: string | null;
+  debtTotal?: number | null;
+  existingLoanCount?: number | null;
+  loanPurpose?: string | null;
 };
 
 export type UserProfileSaveResponse = {

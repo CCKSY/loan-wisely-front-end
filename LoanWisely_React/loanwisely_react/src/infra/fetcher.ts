@@ -1,4 +1,4 @@
-﻿// Shared fetcher with timeout and error handling.
+// Shared fetcher with timeout and error handling.
  import { env } from "./env";
 
  export class FetchError extends Error {
@@ -24,19 +24,28 @@
    return response.text();
  };
 
- export const fetcher = async <T>(
-   input: RequestInfo | URL,
-   options: FetcherOptions = {},
- ): Promise<T> => {
-   const controller = new AbortController();
-   const timeoutMs = options.timeoutMs ?? env.requestTimeoutMs;
-   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+export const fetcher = async <T>(
+  input: RequestInfo | URL,
+  options: FetcherOptions = {},
+): Promise<T> => {
+  const controller = new AbortController();
+  const timeoutMs = options.timeoutMs ?? env.requestTimeoutMs;
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  const headers = new Headers(options.headers);
 
-   try {
-     const response = await fetch(input, {
-       ...options,
-       signal: controller.signal,
-     });
+  if (typeof window !== "undefined" && !headers.has("authorization")) {
+    const token = window.localStorage.getItem("accessToken");
+    if (token) {
+      headers.set("authorization", `Bearer ${token}`);
+    }
+  }
+
+  try {
+    const response = await fetch(input, {
+      ...options,
+      headers,
+      signal: controller.signal,
+    });
      const body = await parseBody(response);
 
      if (!response.ok) {

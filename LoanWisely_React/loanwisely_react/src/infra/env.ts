@@ -1,4 +1,4 @@
-﻿// Server environment helpers.
+// Server environment helpers.
  type NodeEnv = "development" | "production" | "test";
 
  const normalizeNodeEnv = (value?: string): NodeEnv => {

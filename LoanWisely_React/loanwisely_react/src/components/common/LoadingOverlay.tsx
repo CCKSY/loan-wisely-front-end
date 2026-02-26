@@ -1,4 +1,4 @@
-﻿// Full-screen loading overlay component.
+// Full-screen loading overlay component.
 import type { ReactNode } from "react";
 
 type LoadingOverlayProps = {
