@@ -1,0 +1,33 @@
+/* Global styles and Tailwind base layer. */
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --lw-bg: #f6f4f1;
+  --lw-surface: #ffffff;
+  --lw-border: #e6dfd7;
+  --lw-ink: #2a231d;
+  --lw-muted: #6f6256;
+  --lw-accent: #caa974;
+  --lw-accent-ink: #8b6a2a;
+  --lw-shadow: 0 12px 26px rgba(32, 24, 16, 0.08);
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 246, 233, 0.75), transparent 45%),
+    radial-gradient(circle at 90% 0%, rgba(245, 236, 225, 0.7), transparent 40%),
+    linear-gradient(180deg, #f8f5f1 0%, #efe9e2 100%);
+  color: var(--lw-ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+
